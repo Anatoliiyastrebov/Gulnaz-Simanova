@@ -1,6 +1,6 @@
 .form-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #faf8f5 0%, #f0ebe5 50%, #e8f0e8 100%);
+  background: linear-gradient(135deg, #f5fafa 0%, #e8f4f3 50%, #e0f5f2 100%);
   position: relative;
   overflow: hidden;
   animation: fadeIn 0.6s ease-out;
@@ -13,7 +13,7 @@
   right: -15%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(168, 197, 168, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(94, 196, 182, 0.12) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   animation: pulse 8s ease-in-out infinite;
@@ -26,7 +26,7 @@
   left: -10%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(107, 125, 107, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(42, 157, 143, 0.1) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   animation: pulse 10s ease-in-out infinite;
@@ -40,7 +40,7 @@
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(232, 224, 216, 0.3);
+  border-bottom: 1px solid rgba(212, 232, 228, 0.3);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   animation: slideInLeft 0.6s ease-out;
   position: relative;
@@ -61,7 +61,7 @@
 .header-logo {
   height: 50px;
   width: auto;
-  filter: drop-shadow(0 2px 4px rgba(107, 125, 107, 0.2));
+  filter: drop-shadow(0 2px 4px rgba(42, 157, 143, 0.2));
 }
 
 .form-header-right {
@@ -85,21 +85,21 @@
 
 .form-title-section h1 {
   font-size: 36px;
-  color: #4a5a4a;
+  color: #3d5c5c;
   margin: 0;
   font-weight: 600;
-  background: linear-gradient(135deg, #4a5a4a 0%, #6b7d6b 100%);
+  background: linear-gradient(135deg, #3d5c5c 0%, #2a9d8f 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .questionnaire-form {
-  background: linear-gradient(135deg, #fff 0%, #faf8f5 100%);
+  background: linear-gradient(135deg, #fff 0%, #f5fafa 100%);
   border-radius: 24px;
   padding: 32px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(212, 197, 176, 0.2);
+  border: 1px solid rgba(176, 212, 208, 0.2);
   animation: scaleIn 0.6s ease-out 0.2s both;
   position: relative;
   overflow: hidden;
@@ -112,7 +112,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(168, 197, 168, 0.05), transparent);
+  background: linear-gradient(90deg, transparent, rgba(94, 196, 182, 0.05), transparent);
   animation: shimmer 3s ease-in-out infinite;
 }
 
@@ -132,7 +132,7 @@
   display: block;
   font-size: 16px;
   font-weight: 600;
-  color: #4a5a4a;
+  color: #3d5c5c;
   margin-bottom: 12px;
 }
 
@@ -146,11 +146,11 @@
 .form-select {
   width: 100%;
   padding: 14px 18px;
-  border: 2px solid #e8e0d8;
+  border: 2px solid #d4e8e6;
   border-radius: 12px;
   font-size: 15px;
   font-family: inherit;
-  color: #4a5a4a;
+  color: #3d5c5c;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
   background: #fff;
@@ -160,15 +160,15 @@
 .form-textarea:focus,
 .form-select:focus {
   outline: none;
-  border-color: #a8c5a8;
-  box-shadow: 0 0 0 4px rgba(168, 197, 168, 0.1), 0 4px 12px rgba(107, 125, 107, 0.1);
+  border-color: #5ec4b6;
+  box-shadow: 0 0 0 4px rgba(94, 196, 182, 0.1), 0 4px 12px rgba(42, 157, 143, 0.1);
   transform: translateY(-2px);
 }
 
 .form-input:hover,
 .form-textarea:hover,
 .form-select:hover {
-  border-color: #d4c5b0;
+  border-color: #b0d4d0;
 }
 
 .form-textarea {
@@ -190,15 +190,15 @@
   gap: 12px;
   cursor: pointer;
   padding: 12px;
-  border: 2px solid #e8e0d8;
+  border: 2px solid #d4e8e6;
   border-radius: 8px;
   transition: all 0.3s ease;
 }
 
 .radio-label:hover,
 .checkbox-label:hover {
-  background: #faf8f5;
-  border-color: #d4c5b0;
+  background: #f5fafa;
+  border-color: #b0d4d0;
 }
 
 .radio-label input[type="radio"],
@@ -206,7 +206,7 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #6b7d6b;
+  accent-color: #2a9d8f;
 }
 
 .file-upload {
@@ -225,12 +225,12 @@
   align-items: center;
   gap: 12px;
   padding: 24px;
-  background: linear-gradient(135deg, #faf8f5 0%, #f0ebe5 100%);
-  border: 2px dashed #a8c5a8;
+  background: linear-gradient(135deg, #f5fafa 0%, #e8f4f3 100%);
+  border: 2px dashed #5ec4b6;
   border-radius: 12px;
   cursor: pointer;
   text-align: center;
-  color: #6b7d6b;
+  color: #2a9d8f;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -243,7 +243,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(168, 197, 168, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(94, 196, 182, 0.1), transparent);
   transition: left 0.5s ease;
 }
 
@@ -252,16 +252,16 @@
 }
 
 .file-label:hover {
-  background: linear-gradient(135deg, #f0ebe5 0%, #e8f0e8 100%);
-  border-color: #6b7d6b;
+  background: linear-gradient(135deg, #e8f4f3 0%, #e0f5f2 100%);
+  border-color: #2a9d8f;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(107, 125, 107, 0.15);
+  box-shadow: 0 4px 12px rgba(42, 157, 143, 0.15);
 }
 
 .file-upload-icon {
   width: 60px;
   height: 60px;
-  filter: drop-shadow(0 2px 4px rgba(107, 125, 107, 0.2));
+  filter: drop-shadow(0 2px 4px rgba(42, 157, 143, 0.2));
   transition: transform 0.3s ease;
 }
 
@@ -272,12 +272,12 @@
 .file-label-text {
   font-size: 16px;
   font-weight: 600;
-  color: #4a5a4a;
+  color: #3d5c5c;
 }
 
 .file-label-hint {
   font-size: 12px;
-  color: #8b9a8b;
+  color: #6ba8a0;
   font-style: italic;
 }
 
@@ -293,17 +293,17 @@
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  background: linear-gradient(135deg, #fff 0%, #faf8f5 100%);
-  border: 1px solid #e8e0d8;
+  background: linear-gradient(135deg, #fff 0%, #f5fafa 100%);
+  border: 1px solid #d4e8e6;
   border-radius: 8px;
   font-size: 14px;
-  color: #4a5a4a;
+  color: #3d5c5c;
   transition: all 0.3s ease;
 }
 
 .file-item:hover {
-  background: linear-gradient(135deg, #faf8f5 0%, #f0ebe5 100%);
-  border-color: #a8c5a8;
+  background: linear-gradient(135deg, #f5fafa 0%, #e8f4f3 100%);
+  border-color: #5ec4b6;
   transform: translateX(4px);
 }
 
@@ -314,19 +314,19 @@
 .file-item-name {
   flex: 1;
   font-weight: 500;
-  color: #4a5a4a;
+  color: #3d5c5c;
   word-break: break-word;
 }
 
 .file-item-size {
-  color: #8b9a8b;
+  color: #6ba8a0;
   font-size: 12px;
 }
 
 .conditional-fields {
   margin-top: 20px;
   padding-left: 20px;
-  border-left: 3px solid #a8c5a8;
+  border-left: 3px solid #5ec4b6;
 }
 
 /* Составные поля (group) */
@@ -346,7 +346,7 @@
 .grouped-field-label {
   font-size: 14px;
   font-weight: 600;
-  color: #6b7d6b;
+  color: #2a9d8f;
 }
 
 /* Числовые поля с единицами измерения */
@@ -363,7 +363,7 @@
 .input-unit {
   position: absolute;
   right: 16px;
-  color: #8b9a8b;
+  color: #6ba8a0;
   font-size: 14px;
   pointer-events: none;
 }
@@ -373,7 +373,7 @@
   margin-top: 12px;
   margin-left: 32px;
   padding-left: 16px;
-  border-left: 2px solid #d4c5b0;
+  border-left: 2px solid #b0d4d0;
 }
 
 .other-input {
@@ -399,9 +399,9 @@
 }
 
 .field-hint.hint-success {
-  color: #6b7d6b;
-  background: rgba(168, 197, 168, 0.15);
-  border: 1px solid rgba(168, 197, 168, 0.3);
+  color: #2a9d8f;
+  background: rgba(94, 196, 182, 0.15);
+  border: 1px solid rgba(94, 196, 182, 0.3);
 }
 
 .field-hint.hint-error {
@@ -412,10 +412,10 @@
 
 /* Специальные стили для контактных полей */
 .contact-field {
-  background: linear-gradient(135deg, rgba(168, 197, 168, 0.08) 0%, rgba(107, 125, 107, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(94, 196, 182, 0.08) 0%, rgba(42, 157, 143, 0.05) 100%);
   padding: 24px;
   border-radius: 12px;
-  border: 2px solid rgba(168, 197, 168, 0.3);
+  border: 2px solid rgba(94, 196, 182, 0.3);
   margin-top: 32px;
   position: relative;
   overflow: hidden;
@@ -428,12 +428,12 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #a8c5a8 0%, #6b7d6b 100%);
+  background: linear-gradient(90deg, #5ec4b6 0%, #2a9d8f 100%);
 }
 
 .contact-field .question-label {
   font-size: 18px;
-  color: #4a5a4a;
+  color: #3d5c5c;
   margin-bottom: 16px;
 }
 
@@ -458,9 +458,9 @@
 .consent-section {
   margin: 32px 0;
   padding: 24px;
-  background: #faf8f5;
+  background: #f5fafa;
   border-radius: 8px;
-  border: 2px solid #e8e0d8;
+  border: 2px solid #d4e8e6;
 }
 
 .consent-label {
@@ -469,14 +469,14 @@
   gap: 12px;
   cursor: pointer;
   font-size: 15px;
-  color: #4a5a4a;
+  color: #3d5c5c;
 }
 
 .consent-label input[type="checkbox"] {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  accent-color: #6b7d6b;
+  accent-color: #2a9d8f;
 }
 
 .form-navigation {
@@ -485,7 +485,7 @@
   gap: 16px;
   margin-top: 40px;
   padding-top: 32px;
-  border-top: 1px solid #e8e0d8;
+  border-top: 1px solid #d4e8e6;
 }
 
 .nav-button {
@@ -499,7 +499,7 @@
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #a8c5a8 0%, #6b7d6b 100%);
+  background: linear-gradient(135deg, #5ec4b6 0%, #2a9d8f 100%);
   color: #fff;
   position: relative;
   overflow: hidden;
@@ -525,7 +525,7 @@
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(107, 125, 107, 0.4), 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(42, 157, 143, 0.4), 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .submit-btn:active:not(:disabled) {

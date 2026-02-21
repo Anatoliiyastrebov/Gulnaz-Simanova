@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#7b9e87;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#a3c4a3;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#2a9d8f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5ec4b6;stop-opacity:1" />
     </linearGradient>
     <linearGradient id="innerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#5a7d5a;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#8fb88f;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#1a7a6e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a9d8f;stop-opacity:1" />
     </linearGradient>
   </defs>
 
