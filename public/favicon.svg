@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7b9e87;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a3c4a3;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="innerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5a7d5a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8fb88f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect x="2" y="2" width="96" height="96" rx="22" fill="url(#bgGrad)"/>
+
+  <path d="M 36 55 Q 36 30, 50 22 Q 50 42, 38 58" fill="white" opacity="0.35"/>
+  <path d="M 64 55 Q 64 30, 50 22 Q 50 42, 62 58" fill="white" opacity="0.25"/>
+  <path d="M 50 22 L 50 62" stroke="white" stroke-width="2" fill="none" opacity="0.3"/>
+
+  <text x="50" y="58" font-family="'Georgia', serif" font-size="30" font-weight="700" fill="white" text-anchor="middle" letter-spacing="1px" opacity="0.95">
+    ГС
+  </text>
+
+  <circle cx="50" cy="72" r="4" fill="white" opacity="0.25"/>
+</svg>
