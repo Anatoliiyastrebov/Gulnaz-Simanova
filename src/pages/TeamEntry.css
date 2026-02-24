@@ -1,0 +1,229 @@
+.team-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5fafa 0%, #e8f4f3 45%, #e0f5f2 100%);
+}
+
+.team-header {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(176, 212, 208, 0.4);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+}
+
+.team-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 34px 20px 50px;
+}
+
+.team-intro {
+  background: #fff;
+  border: 1px solid rgba(176, 212, 208, 0.4);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 28px rgba(42, 157, 143, 0.08);
+  animation: fadeIn 0.55s ease-out;
+}
+
+.team-intro h1 {
+  margin: 0 0 14px;
+  color: #3d5c5c;
+  font-size: 30px;
+}
+
+.team-intro p {
+  margin: 0;
+  color: #446161;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.team-intro h2 {
+  margin: 14px 0 0;
+  font-size: 18px;
+  color: #2a9d8f;
+  font-weight: 600;
+}
+
+.team-form-card,
+.team-success {
+  background: #fff;
+  border: 1px solid rgba(176, 212, 208, 0.4);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 28px rgba(42, 157, 143, 0.08);
+}
+
+.team-progress-wrap {
+  margin-bottom: 22px;
+}
+
+.team-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #446161;
+  font-size: 14px;
+}
+
+.team-progress-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #e8f4f3;
+  overflow: hidden;
+}
+
+.team-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2a9d8f, #5ec4b6);
+  transition: width 0.28s ease;
+}
+
+.team-step-title {
+  margin: 0 0 16px;
+  font-size: 23px;
+  color: #3d5c5c;
+}
+
+.team-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.team-input,
+.team-textarea {
+  width: 100%;
+  border: 2px solid #d4e8e6;
+  border-radius: 12px;
+  padding: 13px 14px;
+  font-size: 15px;
+  color: #3d5c5c;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-input:focus,
+.team-textarea:focus {
+  border-color: #5ec4b6;
+  box-shadow: 0 0 0 3px rgba(94, 196, 182, 0.16);
+}
+
+.team-input.error,
+.team-textarea.error {
+  border-color: #d9534f;
+}
+
+.team-hint {
+  margin: 0;
+  color: #6ba8a0;
+  font-size: 12px;
+}
+
+.team-options {
+  display: grid;
+  gap: 10px;
+}
+
+.team-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #d4e8e6;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #3d5c5c;
+}
+
+.team-option:hover {
+  border-color: #5ec4b6;
+  background: #f5fafa;
+}
+
+.team-option input {
+  accent-color: #2a9d8f;
+}
+
+.team-error {
+  margin: 0;
+  color: #d9534f;
+  font-size: 13px;
+}
+
+.submit-error {
+  margin-top: 10px;
+}
+
+.team-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.team-btn {
+  min-width: 140px;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.team-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.team-btn-primary {
+  background: linear-gradient(135deg, #2a9d8f, #5ec4b6);
+  color: #fff;
+}
+
+.team-btn-secondary {
+  background: #e8f4f3;
+  color: #3d5c5c;
+}
+
+.team-success h3 {
+  margin: 0 0 10px;
+  color: #3d5c5c;
+}
+
+.team-success p {
+  margin: 0;
+  line-height: 1.7;
+  color: #446161;
+}
+
+.team-back-home {
+  display: inline-block;
+  margin-top: 18px;
+  text-decoration: none;
+  color: #2a9d8f;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .team-intro h1 {
+    font-size: 24px;
+  }
+
+  .team-step-title {
+    font-size: 20px;
+  }
+
+  .team-actions {
+    flex-direction: column;
+  }
+
+  .team-btn {
+    width: 100%;
+  }
+}

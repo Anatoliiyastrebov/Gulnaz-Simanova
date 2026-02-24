@@ -30,6 +30,9 @@ export const Landing: React.FC = () => {
               </React.Fragment>
             ))}
           </p>
+          <Link to="/team" className="team-cta-button">
+            Вход в команду
+          </Link>
           <p className="landing-signature">{t('common.signature', lang)}</p>
         </div>
         

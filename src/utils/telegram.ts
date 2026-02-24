@@ -842,3 +842,108 @@ export function exportToJSON(
   return JSON.stringify(data, null, 2);
 }
 
+export interface TeamApplicationData {
+  name: string;
+  telegram: string;
+  instagram: string;
+  occupation: string;
+  occupationOther?: string;
+  incomeSatisfaction: string;
+  incomeReason: string;
+  desiredIncome: string;
+  dailyWorkReadiness: string;
+  experience: string;
+  priority: string;
+}
+
+let lastTeamSubmitAt = 0;
+const TEAM_SUBMIT_COOLDOWN_MS = 15000;
+
+export async function sendTeamApplicationToTelegram(data: TeamApplicationData): Promise<boolean> {
+  const now = Date.now();
+  if (now - lastTeamSubmitAt < TEAM_SUBMIT_COOLDOWN_MS) {
+    console.warn('Team application rate limit reached');
+    return false;
+  }
+
+  const requiredFields: Array<keyof TeamApplicationData> = [
+    'name',
+    'telegram',
+    'instagram',
+    'occupation',
+    'incomeSatisfaction',
+    'incomeReason',
+    'desiredIncome',
+    'dailyWorkReadiness',
+    'experience',
+    'priority'
+  ];
+
+  for (const field of requiredFields) {
+    if (!String(data[field] || '').trim()) {
+      console.error('Team application validation failed. Missing field:', field);
+      return false;
+    }
+  }
+
+  try {
+    const timestamp = new Date().toLocaleString('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    const occupationText = data.occupation === 'other' && data.occupationOther
+      ? `Другое: ${data.occupationOther}`
+      : data.occupation;
+
+    const message = [
+      '<b>🔥 Новая заявка: Вход в команду</b>',
+      '',
+      `<b>📅 Дата:</b> ${escapeHtml(timestamp)}`,
+      '',
+      '━━━━━━━━━━━━━━━━━━━━',
+      '',
+      `<b>1. Ваше имя:</b> ${escapeHtml(data.name)}`,
+      `<b>2. Telegram:</b> @${escapeHtml(data.telegram)}`,
+      `<b>3. Instagram:</b> ${escapeHtml(data.instagram)}`,
+      `<b>4. Чем занимаетесь сейчас:</b> ${escapeHtml(occupationText)}`,
+      `<b>5. Доход сейчас:</b> ${escapeHtml(data.incomeSatisfaction)}`,
+      `<b>6. Почему рассматриваете новый доход:</b> ${escapeHtml(data.incomeReason)}`,
+      `<b>7. Желаемый доход через 12 месяцев:</b> ${escapeHtml(data.desiredIncome)}`,
+      `<b>8. Готовность работать 1-2 часа в день:</b> ${escapeHtml(data.dailyWorkReadiness)}`,
+      `<b>9. Опыт в продажах / сетевом / бизнесе:</b> ${escapeHtml(data.experience)}`,
+      `<b>10. Что важнее:</b> ${escapeHtml(data.priority)}`,
+      '',
+      '━━━━━━━━━━━━━━━━━━━━',
+      '<i>Форма входа в команду отправлена через сайт</i>'
+    ].join('\n');
+
+    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'HTML'
+      })
+    });
+
+    const responseData = await response.json();
+    if (!response.ok) {
+      console.error('Telegram team application error:', responseData);
+      return false;
+    }
+
+    lastTeamSubmitAt = now;
+    return true;
+  } catch (error) {
+    console.error('Error sending team application:', error);
+    return false;
+  }
+}
+

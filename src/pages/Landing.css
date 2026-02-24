@@ -134,6 +134,27 @@
   animation: fadeIn 0.8s ease-out 0.6s both;
 }
 
+.team-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 22px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2a9d8f 0%, #5ec4b6 100%);
+  box-shadow: 0 10px 26px rgba(42, 157, 143, 0.3);
+  animation: fadeIn 0.8s ease-out 0.7s both;
+}
+
+.team-cta-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(42, 157, 143, 0.35);
+}
+
 .landing-signature {
   font-size: 16px;
   color: #6ba8a0;
