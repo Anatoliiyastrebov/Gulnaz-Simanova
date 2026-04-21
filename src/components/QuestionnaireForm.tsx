@@ -252,8 +252,13 @@ export const QuestionnaireForm: React.FC = () => {
             newErrors[field.id] = t('common.required', lang);
           }
           if (field.id === 'q1_age' && formData[field.id] !== undefined && formData[field.id] !== '') {
-            const yearValue = Number(formData[field.id]);
-            if (Number.isNaN(yearValue) || yearValue < 1900 || yearValue > currentYear) {
+            const n = Number(formData[field.id]);
+            if (questionnaire?.id === 'babies') {
+              if (Number.isNaN(n) || n < 0 || n > 12) {
+                newErrors[field.id] =
+                  lang === 'en' ? 'Valid range: 0–12 full months' : 'Допустимо: 0–12 полных месяцев';
+              }
+            } else if (Number.isNaN(n) || n < 1900 || n > currentYear) {
               newErrors[field.id] = `Допустимый диапазон: 1900-${currentYear}`;
             }
           }
@@ -571,7 +576,11 @@ const QuestionFieldComponent: React.FC<QuestionFieldProps> = ({
                       min={field.min}
                       max={field.max}
                     />
-                    {field.unit && <span className="input-unit">{field.unit}</span>}
+                    {field.unit && (
+                      <span className="input-unit">
+                        {(field.unitEn && lang === 'en') ? field.unitEn : field.unit}
+                      </span>
+                    )}
                   </div>
                 )}
                 {errors?.[field.id] && (

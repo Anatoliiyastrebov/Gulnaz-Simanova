@@ -28,6 +28,7 @@ export interface GroupedField {
   placeholderEn?: string;
   required?: boolean;
   unit?: string; // Единица измерения (кг, см, лет и т.д.)
+  unitEn?: string; // English unit label when language is English
   min?: number; // Минимальное значение для number
   max?: number; // Максимальное значение для number
 }
@@ -81,7 +82,7 @@ export const babiesQuestionnaire: Questionnaire = {
       groupedFields: [
         { id: 'q1_name', type: 'text', label: 'Имя', labelEn: 'First name', required: true, placeholder: 'Имя ребёнка', placeholderEn: 'Baby\'s first name' },
         { id: 'q1_surname', type: 'text', label: 'Фамилия', labelEn: 'Last name', required: true, placeholder: 'Фамилия ребёнка', placeholderEn: 'Baby\'s last name' },
-        { id: 'q1_age', type: 'number', label: 'Год рождения', labelEn: 'Year of birth', required: true, placeholder: 'Например: 1998', placeholderEn: 'For example: 1998', min: 1900 },
+        { id: 'q1_age', type: 'number', label: 'Сколько полных месяцев', labelEn: 'Age in full months', required: true, placeholder: 'Например: 6', placeholderEn: 'For example: 6', min: 0, max: 12, unit: 'мес.', unitEn: 'mo' },
         { id: 'q1_weight', type: 'number', label: 'Вес', labelEn: 'Weight', required: true, placeholder: 'Вес', placeholderEn: 'Weight', unit: 'кг', min: 0 }
       ]
     },

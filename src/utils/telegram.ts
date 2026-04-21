@@ -403,7 +403,9 @@ function createQuestionnaireHTML(
         <div class="section-title">👤 Основная информация</div>
         ${name ? `<div class="info-item"><strong>Имя:</strong> ${escapeHtml(name)}</div>` : ''}
         ${surname ? `<div class="info-item"><strong>Фамилия:</strong> ${escapeHtml(surname)}</div>` : ''}
-        ${age ? `<div class="info-item"><strong>Год рождения:</strong> ${escapeHtml(String(age))}</div>` : ''}
+        ${age
+          ? `<div class="info-item"><strong>${questionnaireId === 'babies' ? 'Возраст' : 'Год рождения'}:</strong> ${escapeHtml(String(age))}${questionnaireId === 'babies' ? ' мес.' : ''}</div>`
+          : ''}
         ${weight ? `<div class="info-item"><strong>Вес:</strong> ${escapeHtml(String(weight))} кг</div>` : ''}
         ${height ? `<div class="info-item"><strong>Рост:</strong> ${escapeHtml(String(height))} см</div>` : ''}
       </div>
@@ -647,7 +649,12 @@ function formatQuestionnaireMessage(
     message += `<b>👤 Основная информация:</b>\n`;
     if (name) message += `Имя: ${name}\n`;
     if (surname) message += `Фамилия: ${surname}\n`;
-    if (age) message += `Год рождения: ${age}\n`;
+    if (age) {
+      message +=
+        questionnaireId === 'babies'
+          ? `Возраст: ${age} мес.\n`
+          : `Год рождения: ${age}\n`;
+    }
     if (weight) message += `Вес: ${weight} кг\n`;
     if (height) message += `Рост: ${height} см\n`;
     message += `\n`;
