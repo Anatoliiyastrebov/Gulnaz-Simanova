@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Landing } from './pages/Landing';
 import { QuestionnaireForm } from './components/QuestionnaireForm';
 import { Impressum } from './pages/Impressum';
+import { ScrollTopButton } from './components/ScrollTopButton';
 import './App.css';
 
 const TeamEntry = lazy(() => import('./pages/TeamEntry').then((module) => ({ default: module.TeamEntry })));
@@ -17,6 +18,7 @@ function App() {
           <Route path="/team" element={<TeamEntry />} />
           <Route path="/impressum" element={<Impressum />} />
         </Routes>
+        <ScrollTopButton />
       </Suspense>
     </Router>
   );

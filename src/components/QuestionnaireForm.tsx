@@ -106,6 +106,7 @@ export const QuestionnaireForm: React.FC = () => {
   
   const validateForm = (): Record<string, string> => {
     const newErrors: Record<string, string> = {};
+    const currentYear = new Date().getFullYear();
     
     const validateQuestion = (question: QuestionField) => {
       // Для составных полей (group) проверяем каждое поле отдельно
@@ -113,6 +114,12 @@ export const QuestionnaireForm: React.FC = () => {
         question.groupedFields.forEach(field => {
           if (field.required && !formData[field.id]) {
             newErrors[field.id] = t('common.required', lang);
+          }
+          if (field.id === 'q1_age' && formData[field.id] !== undefined && formData[field.id] !== '') {
+            const yearValue = Number(formData[field.id]);
+            if (Number.isNaN(yearValue) || yearValue < 1900 || yearValue > currentYear) {
+              newErrors[field.id] = `Допустимый диапазон: 1900-${currentYear}`;
+            }
           }
         });
       } else if (question.required && !formData[question.id]) {
@@ -254,6 +261,9 @@ export const QuestionnaireForm: React.FC = () => {
           <img src="/logo.svg" alt="Wellness Logo" className="header-logo" />
         </Link>
         <div className="form-header-right">
+          <Link to="/" className="back-button">
+            ← Назад
+          </Link>
           <LanguageSwitcher />
         </div>
       </header>
@@ -436,8 +446,8 @@ const QuestionFieldComponent: React.FC<QuestionFieldProps> = ({
                       }}
                       placeholder={(field.placeholderEn && lang === 'en') ? field.placeholderEn : field.placeholder}
                       className={`form-input ${errors?.[field.id] ? 'error' : ''}`}
-                      min={field.unit === 'месяцев' ? 0 : field.unit === 'лет' ? 1 : 0}
-                      max={field.unit === 'месяцев' ? 12 : undefined}
+                      min={field.min}
+                      max={field.max}
                     />
                     {field.unit && <span className="input-unit">{field.unit}</span>}
                   </div>

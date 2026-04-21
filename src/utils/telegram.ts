@@ -377,7 +377,7 @@ function createQuestionnaireHTML(
         <div class="section-title">👤 Основная информация</div>
         ${name ? `<div class="info-item"><strong>Имя:</strong> ${escapeHtml(name)}</div>` : ''}
         ${surname ? `<div class="info-item"><strong>Фамилия:</strong> ${escapeHtml(surname)}</div>` : ''}
-        ${age ? `<div class="info-item"><strong>Возраст:</strong> ${escapeHtml(String(age))}</div>` : ''}
+        ${age ? `<div class="info-item"><strong>Год рождения:</strong> ${escapeHtml(String(age))}</div>` : ''}
         ${weight ? `<div class="info-item"><strong>Вес:</strong> ${escapeHtml(String(weight))} кг</div>` : ''}
         ${height ? `<div class="info-item"><strong>Рост:</strong> ${escapeHtml(String(height))} см</div>` : ''}
       </div>
@@ -621,7 +621,7 @@ function formatQuestionnaireMessage(
     message += `<b>👤 Основная информация:</b>\n`;
     if (name) message += `Имя: ${name}\n`;
     if (surname) message += `Фамилия: ${surname}\n`;
-    if (age) message += `Возраст: ${age}\n`;
+    if (age) message += `Год рождения: ${age}\n`;
     if (weight) message += `Вес: ${weight} кг\n`;
     if (height) message += `Рост: ${height} см\n`;
     message += `\n`;
@@ -846,6 +846,8 @@ export interface TeamApplicationData {
   name: string;
   telegram: string;
   instagram: string;
+  whatsapp: string;
+  max: string;
   occupation: string;
   occupationOther?: string;
   incomeSatisfaction: string;
@@ -868,8 +870,6 @@ export async function sendTeamApplicationToTelegram(data: TeamApplicationData): 
 
   const requiredFields: Array<keyof TeamApplicationData> = [
     'name',
-    'telegram',
-    'instagram',
     'occupation',
     'incomeSatisfaction',
     'incomeReason',
@@ -886,6 +886,16 @@ export async function sendTeamApplicationToTelegram(data: TeamApplicationData): 
     }
   }
 
+  const hasContact =
+    String(data.telegram || '').trim() ||
+    String(data.instagram || '').trim() ||
+    String(data.whatsapp || '').trim() ||
+    String(data.max || '').trim();
+  if (!hasContact) {
+    console.error('Team application validation failed. No contact method');
+    return false;
+  }
+
   try {
     const timestamp = new Date().toLocaleString('ru-RU', {
       day: '2-digit',
@@ -899,6 +909,13 @@ export async function sendTeamApplicationToTelegram(data: TeamApplicationData): 
       ? `Другое: ${data.occupationOther}`
       : data.occupation;
 
+    const lineContact = (label: string, value: string, atPrefix: boolean) => {
+      const v = value.trim();
+      if (!v) return `<b>${label}:</b> —`;
+      const show = atPrefix ? `@${escapeHtml(v.replace(/^@+/, ''))}` : escapeHtml(v);
+      return `<b>${label}:</b> ${show}`;
+    };
+
     const message = [
       '<b>🔥 Новая заявка: Вход в команду</b>',
       '',
@@ -907,15 +924,19 @@ export async function sendTeamApplicationToTelegram(data: TeamApplicationData): 
       '━━━━━━━━━━━━━━━━━━━━',
       '',
       `<b>1. Ваше имя:</b> ${escapeHtml(data.name)}`,
-      `<b>2. Telegram:</b> @${escapeHtml(data.telegram)}`,
-      `<b>3. Instagram:</b> ${escapeHtml(data.instagram)}`,
-      `<b>4. Чем занимаетесь сейчас:</b> ${escapeHtml(occupationText)}`,
-      `<b>5. Доход сейчас:</b> ${escapeHtml(data.incomeSatisfaction)}`,
-      `<b>6. Почему рассматриваете новый доход:</b> ${escapeHtml(data.incomeReason)}`,
-      `<b>7. Желаемый доход через 12 месяцев:</b> ${escapeHtml(data.desiredIncome)}`,
-      `<b>8. Готовность работать 1-2 часа в день:</b> ${escapeHtml(data.dailyWorkReadiness)}`,
-      `<b>9. Опыт в продажах / сетевом / бизнесе:</b> ${escapeHtml(data.experience)}`,
-      `<b>10. Что важнее:</b> ${escapeHtml(data.priority)}`,
+      `<b>2. Чем занимаетесь сейчас:</b> ${escapeHtml(occupationText)}`,
+      `<b>3. Доход сейчас:</b> ${escapeHtml(data.incomeSatisfaction)}`,
+      `<b>4. Почему рассматриваете новый доход:</b> ${escapeHtml(data.incomeReason)}`,
+      `<b>5. Желаемый доход через 12 месяцев:</b> ${escapeHtml(data.desiredIncome)}`,
+      `<b>6. Готовность работать 1-2 часа в день:</b> ${escapeHtml(data.dailyWorkReadiness)}`,
+      `<b>7. Опыт в продажах / сетевом / бизнесе:</b> ${escapeHtml(data.experience)}`,
+      `<b>8. Что важнее:</b> ${escapeHtml(data.priority)}`,
+      '',
+      '<b>📞 Способы связи</b>',
+      lineContact('Telegram', data.telegram, true),
+      lineContact('Instagram', data.instagram, true),
+      lineContact('WhatsApp', data.whatsapp, false),
+      lineContact('MAX', data.max, false),
       '',
       '━━━━━━━━━━━━━━━━━━━━',
       '<i>Форма входа в команду отправлена через сайт</i>'

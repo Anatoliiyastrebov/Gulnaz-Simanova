@@ -58,35 +58,82 @@
   box-shadow: 0 10px 28px rgba(42, 157, 143, 0.08);
 }
 
-.team-progress-wrap {
-  margin-bottom: 22px;
-}
-
-.team-progress-meta {
+.team-form-all {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  color: #446161;
-  font-size: 14px;
+  flex-direction: column;
+  gap: 0;
 }
 
-.team-progress-bar {
-  height: 10px;
-  border-radius: 999px;
-  background: #e8f4f3;
-  overflow: hidden;
+.team-section {
+  margin-bottom: 28px;
+  scroll-margin-top: 88px;
 }
 
-.team-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #2a9d8f, #5ec4b6);
-  transition: width 0.28s ease;
+.team-section:last-of-type {
+  margin-bottom: 0;
 }
 
-.team-step-title {
-  margin: 0 0 16px;
-  font-size: 23px;
+.team-section-title {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
   color: #3d5c5c;
+  line-height: 1.4;
+}
+
+.team-other-wrap {
+  margin-top: 12px;
+}
+
+.team-contacts-panel {
+  margin-top: 8px;
+  padding: 22px 20px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(94, 196, 182, 0.08) 0%, rgba(42, 157, 143, 0.05) 100%);
+  border: 1px solid rgba(94, 196, 182, 0.45);
+  scroll-margin-top: 88px;
+}
+
+.team-contacts-panel-error {
+  border-color: rgba(217, 83, 79, 0.45);
+  background: rgba(217, 83, 79, 0.04);
+}
+
+.team-contacts-heading {
+  margin-bottom: 8px;
+}
+
+.team-contacts-lead {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #446161;
+}
+
+.team-contacts-banner {
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.team-contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 18px;
+}
+
+.team-contact-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.team-contact-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #2a9d8f;
+  text-transform: none;
 }
 
 .team-field {
@@ -166,6 +213,11 @@
   gap: 10px;
 }
 
+.team-actions-single {
+  margin-top: 8px;
+  justify-content: center;
+}
+
 .team-btn {
   min-width: 140px;
   border: none;
@@ -215,8 +267,16 @@
     font-size: 24px;
   }
 
-  .team-step-title {
-    font-size: 20px;
+  .team-section-title {
+    font-size: 15px;
+  }
+
+  .team-contacts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-contacts-panel {
+    padding: 18px 14px;
   }
 
   .team-actions {

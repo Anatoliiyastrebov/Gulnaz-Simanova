@@ -1,0 +1,30 @@
+.scroll-top-button {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 1000;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2a9d8f 0%, #5ec4b6 100%);
+  box-shadow: 0 10px 24px rgba(42, 157, 143, 0.28);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scroll-top-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(42, 157, 143, 0.35);
+}
+
+@media (max-width: 768px) {
+  .scroll-top-button {
+    right: 14px;
+    bottom: 16px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}

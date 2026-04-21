@@ -81,7 +81,7 @@ export const babiesQuestionnaire: Questionnaire = {
       groupedFields: [
         { id: 'q1_name', type: 'text', label: 'Имя', labelEn: 'First name', required: true, placeholder: 'Имя ребёнка', placeholderEn: 'Baby\'s first name' },
         { id: 'q1_surname', type: 'text', label: 'Фамилия', labelEn: 'Last name', required: true, placeholder: 'Фамилия ребёнка', placeholderEn: 'Baby\'s last name' },
-        { id: 'q1_age', type: 'number', label: 'Возраст', labelEn: 'Age', required: true, placeholder: 'Возраст в месяцах', placeholderEn: 'Age in months', unit: 'месяцев', min: 0, max: 12 },
+        { id: 'q1_age', type: 'number', label: 'Год рождения', labelEn: 'Year of birth', required: true, placeholder: 'Например: 1998', placeholderEn: 'For example: 1998', min: 1900 },
         { id: 'q1_weight', type: 'number', label: 'Вес', labelEn: 'Weight', required: true, placeholder: 'Вес', placeholderEn: 'Weight', unit: 'кг', min: 0 }
       ]
     },
@@ -341,7 +341,7 @@ export const childrenQuestionnaire: Questionnaire = {
       groupedFields: [
         { id: 'q1_name', type: 'text', label: 'Имя', labelEn: 'First name', required: true, placeholder: 'Имя ребёнка', placeholderEn: 'Child\'s first name' },
         { id: 'q1_surname', type: 'text', label: 'Фамилия', labelEn: 'Last name', required: true, placeholder: 'Фамилия ребёнка', placeholderEn: 'Child\'s last name' },
-        { id: 'q1_age', type: 'number', label: 'Возраст', labelEn: 'Age', required: true, placeholder: 'Возраст', placeholderEn: 'Age', unit: 'лет', min: 1, max: 12 },
+        { id: 'q1_age', type: 'number', label: 'Год рождения', labelEn: 'Year of birth', required: true, placeholder: 'Например: 2018', placeholderEn: 'For example: 2018', min: 1900 },
         { id: 'q1_weight', type: 'number', label: 'Вес', labelEn: 'Weight', required: true, placeholder: 'Вес', placeholderEn: 'Weight', unit: 'кг', min: 0 }
       ]
     },
@@ -568,7 +568,7 @@ export const femaleQuestionnaire: Questionnaire = {
       groupedFields: [
         { id: 'q1_name', type: 'text', label: 'Имя', labelEn: 'First name', required: true, placeholder: 'Имя', placeholderEn: 'First name' },
         { id: 'q1_surname', type: 'text', label: 'Фамилия', labelEn: 'Last name', required: true, placeholder: 'Фамилия', placeholderEn: 'Last name' },
-        { id: 'q1_age', type: 'number', label: 'Возраст', labelEn: 'Age', required: true, placeholder: 'Возраст', placeholderEn: 'Age', unit: 'лет', min: 0 },
+        { id: 'q1_age', type: 'number', label: 'Год рождения', labelEn: 'Year of birth', required: true, placeholder: 'Например: 1990', placeholderEn: 'For example: 1990', min: 1900 },
         { id: 'q1_weight', type: 'number', label: 'Вес', labelEn: 'Weight', required: true, placeholder: 'Вес', placeholderEn: 'Weight', unit: 'кг', min: 0 }
       ]
     },
@@ -1068,7 +1068,7 @@ export const maleQuestionnaire: Questionnaire = {
       groupedFields: [
         { id: 'q1_name', type: 'text', label: 'Имя', labelEn: 'First name', required: true, placeholder: 'Имя', placeholderEn: 'First name' },
         { id: 'q1_surname', type: 'text', label: 'Фамилия', labelEn: 'Last name', required: true, placeholder: 'Фамилия', placeholderEn: 'Last name' },
-        { id: 'q1_age', type: 'number', label: 'Возраст', labelEn: 'Age', required: true, placeholder: 'Возраст', placeholderEn: 'Age', unit: 'лет', min: 0 },
+        { id: 'q1_age', type: 'number', label: 'Год рождения', labelEn: 'Year of birth', required: true, placeholder: 'Например: 1990', placeholderEn: 'For example: 1990', min: 1900 },
         { id: 'q1_weight', type: 'number', label: 'Вес', labelEn: 'Weight', required: true, placeholder: 'Вес', placeholderEn: 'Weight', unit: 'кг', min: 0 }
       ]
     },
