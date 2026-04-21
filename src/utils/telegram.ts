@@ -1,6 +1,22 @@
 // Интеграция с Telegram Bot API
 import { getQuestionnaireById, type QuestionField } from '../data/questionnaires';
+import { normalizeTelegramUsername } from './contactValidation';
 import html2pdf from 'html2pdf.js';
+
+/** Поля, выводимые вне основного списка ответов (блоки «основная инфо» и контакты) */
+const QUESTIONNAIRE_EXCLUDED_FROM_SORTED_BODY_KEYS = [
+  'q1_name',
+  'q1_surname',
+  'q1_age',
+  'q1_weight',
+  'q1_height',
+  'contact_telegram',
+  'contact_instagram',
+  'contact_whatsapp',
+  'contact_max',
+] as const;
+
+const EXCLUDED_FROM_SORTED_BODY = new Set<string>(QUESTIONNAIRE_EXCLUDED_FROM_SORTED_BODY_KEYS);
 
 const TELEGRAM_BOT_TOKEN = '8542633582:AAGlU4jqxnOGNNwbcfASwTGfK6ILlx-c2lA';
 const TELEGRAM_CHAT_ID = '-1003407903990';
@@ -162,7 +178,7 @@ function createQuestionnaireHTML(
   const height = formData['q1_height'] || '';
   
   // Обрабатываем остальные ответы
-  const processedKeys = new Set(['q1_name', 'q1_surname', 'q1_age', 'q1_weight', 'q1_height', 'contact_telegram', 'contact_instagram']);
+  const processedKeys = EXCLUDED_FROM_SORTED_BODY;
   
   // Определяем, с какого вопроса начинать нумерацию
   let startNumberingFrom = 'q1_weight_goal';
@@ -290,8 +306,12 @@ function createQuestionnaireHTML(
   }
   
   // Контактные данные
-  const telegram = formData['contact_telegram'] || '';
-  const instagram = formData['contact_instagram'] || '';
+  const tg = normalizeTelegramUsername(String(formData['contact_telegram'] || ''));
+  const ig = normalizeTelegramUsername(String(formData['contact_instagram'] || ''));
+  const wa = String(formData['contact_whatsapp'] || '').trim();
+  const mx = String(formData['contact_max'] || '').trim();
+  const telegram = tg ? `@${tg}` : '';
+  const instagram = ig;
   
   let contactsHTML = '';
   if (telegram) {
@@ -300,7 +320,13 @@ function createQuestionnaireHTML(
   if (instagram) {
     contactsHTML += `<p style="margin: 5px 0;"><strong>Instagram:</strong> @${escapeHtml(instagram)}</p>`;
   }
-  if (!telegram && !instagram) {
+  if (wa) {
+    contactsHTML += `<p style="margin: 5px 0;"><strong>WhatsApp:</strong> ${escapeHtml(wa)}</p>`;
+  }
+  if (mx) {
+    contactsHTML += `<p style="margin: 5px 0;"><strong>MAX:</strong> ${escapeHtml(mx)}</p>`;
+  }
+  if (!telegram && !instagram && !wa && !mx) {
     contactsHTML = '<p style="margin: 5px 0; color: #999;">Не указаны</p>';
   }
   
@@ -627,12 +653,8 @@ function formatQuestionnaireMessage(
     message += `\n`;
   }
   
-  // Добавляем контактные данные в конец
-  const telegram = formData['contact_telegram'] || '';
-  const instagram = formData['contact_instagram'] || '';
-  
   // Добавляем остальные ответы
-  const processedKeys = new Set(['q1_name', 'q1_surname', 'q1_age', 'q1_weight', 'q1_height', 'contact_telegram', 'contact_instagram']);
+  const processedKeys = EXCLUDED_FROM_SORTED_BODY;
   
   // Определяем, с какого вопроса начинать нумерацию
   // Для женской и мужской анкет - с q1_weight_goal
@@ -766,6 +788,13 @@ function formatQuestionnaireMessage(
   }
   
   message += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  const tg = normalizeTelegramUsername(String(formData['contact_telegram'] || ''));
+  const ig = normalizeTelegramUsername(String(formData['contact_instagram'] || ''));
+  const wa = String(formData['contact_whatsapp'] || '').trim();
+  const mx = String(formData['contact_max'] || '').trim();
+  const telegram = tg ? `@${tg}` : '';
+  const instagram = ig;
+
   message += `<b>📞 Контактные данные для связи:</b>\n`;
   if (telegram) {
     message += `💬 Telegram: ${telegram}\n`;
@@ -773,7 +802,13 @@ function formatQuestionnaireMessage(
   if (instagram) {
     message += `📷 Instagram: @${instagram}\n`;
   }
-  if (!telegram && !instagram) {
+  if (wa) {
+    message += `📱 WhatsApp: ${wa}\n`;
+  }
+  if (mx) {
+    message += `💬 MAX: ${mx}\n`;
+  }
+  if (!telegram && !instagram && !wa && !mx) {
     message += `Не указаны\n`;
   }
   message += `\n━━━━━━━━━━━━━━━━━━━━\n`;
@@ -786,6 +821,16 @@ function formatQuestionnaireMessage(
  * Получить текст вопроса по ID поля
  */
 function getQuestionLabel(fieldId: string, questionnaireId: string): string {
+  const staticContactLabels: Record<string, string> = {
+    contact_telegram: 'Telegram',
+    contact_instagram: 'Instagram',
+    contact_whatsapp: 'WhatsApp',
+    contact_max: 'MAX',
+  };
+  if (staticContactLabels[fieldId]) {
+    return staticContactLabels[fieldId];
+  }
+
   const questionnaire = getQuestionnaireById(questionnaireId);
   
   if (questionnaire) {

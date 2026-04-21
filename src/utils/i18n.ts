@@ -38,7 +38,20 @@ const translations: Record<Language, Translations> = {
       telegramHintOk: '✓ Формат правильный',
       telegramHintBad: '⚠️ Формат: @username (5-32 символа)',
       instagramHintOk: '✓ Формат правильный',
-      instagramHintBad: '⚠️ Формат: username без @ (1-30 символов)'
+      instagramHintBad: '⚠️ Формат: username без @ (1-30 символов)',
+      contactSectionTitle: 'Как с вами связаться? *',
+      contactSectionLead:
+        'Заполните удобные вам мессенджеры — достаточно указать минимум один способ. Пустые поля можно оставить пустыми.',
+      contactPlaceholderTelegram: 'username (без @)',
+      contactPlaceholderInstagram: 'username (без @)',
+      contactPlaceholderWhatsapp: '+7 900 123-45-67',
+      contactPlaceholderMax: 'Телефон или ник в MAX',
+      contactHintTelegram: 'Латиница, 5–32 символа',
+      contactHintInstagram: 'Публичный ник, без @',
+      contactHintWhatsapp: 'Номер в международном формате',
+      contactHintMax: 'Как вам удобнее',
+      contactLabelWhatsapp: 'WhatsApp',
+      contactLabelMax: 'MAX'
     },
     questionnaires: {
       babies: 'Малыши до 1 года',
@@ -96,7 +109,20 @@ const translations: Record<Language, Translations> = {
       telegramHintOk: '✓ Format is correct',
       telegramHintBad: '⚠️ Format: @username (5-32 characters)',
       instagramHintOk: '✓ Format is correct',
-      instagramHintBad: '⚠️ Format: username without @ (1-30 characters)'
+      instagramHintBad: '⚠️ Format: username without @ (1-30 characters)',
+      contactSectionTitle: 'How can we reach you? *',
+      contactSectionLead:
+        'Add the messengers you use — you only need to fill in at least one. You may leave the others empty.',
+      contactPlaceholderTelegram: 'username (without @)',
+      contactPlaceholderInstagram: 'username (without @)',
+      contactPlaceholderWhatsapp: '+1 900 123-45-67',
+      contactPlaceholderMax: 'Phone or MAX username',
+      contactHintTelegram: 'Latin letters, 5–32 characters',
+      contactHintInstagram: 'Public handle, no @',
+      contactHintWhatsapp: 'Number in international format',
+      contactHintMax: 'Whatever is easiest for you',
+      contactLabelWhatsapp: 'WhatsApp',
+      contactLabelMax: 'MAX'
     },
     questionnaires: {
       babies: 'Babies up to 1 year',

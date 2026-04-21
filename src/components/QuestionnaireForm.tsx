@@ -4,8 +4,110 @@ import { getQuestionnaireById, type Questionnaire, type QuestionField } from '..
 import { t } from '../utils/i18n';
 import { useLanguage } from '../context/LanguageContext';
 import { sendToTelegram, exportToJSON } from '../utils/telegram';
+import {
+  getHealthContactFieldErrors,
+  getHealthContactFormatOnlyErrors,
+  hasAnyHealthContact,
+  isHealthContactBlockValid,
+  normalizePhoneInput,
+  normalizeTelegramUsername,
+} from '../utils/contactValidation';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import './QuestionnaireForm.css';
+
+interface HealthQuestionnaireContactsProps {
+  formData: Record<string, any>;
+  errors: Record<string, string>;
+  lang: 'ru' | 'en';
+  onChange: (fieldId: string, value: string) => void;
+}
+
+const HealthQuestionnaireContacts: React.FC<HealthQuestionnaireContactsProps> = ({
+  formData,
+  errors,
+  lang,
+  onChange,
+}) => (
+  <div
+    id="questionnaire-field-contacts"
+    className={`qform-contacts-panel ${errors.contacts ? 'qform-contacts-panel-error' : ''}`}
+  >
+    <h3 className="qform-contacts-heading">{t('common.contactSectionTitle', lang)}</h3>
+    <p className="qform-contacts-lead">{t('common.contactSectionLead', lang)}</p>
+    {errors.contacts && <p className="qform-contacts-banner">{errors.contacts}</p>}
+
+    <div className="qform-contacts-grid">
+      <div className="qform-contact-cell" id="questionnaire-field-contact_telegram">
+        <span className="qform-contact-label">Telegram</span>
+        <input
+          type="text"
+          inputMode="text"
+          autoComplete="username"
+          className={`form-input ${errors.contact_telegram ? 'error' : ''}`}
+          value={formData.contact_telegram ?? ''}
+          onChange={(e) => onChange('contact_telegram', e.target.value)}
+          placeholder={t('common.contactPlaceholderTelegram', lang)}
+        />
+        {errors.contact_telegram ? (
+          <p className="qform-field-error">{errors.contact_telegram}</p>
+        ) : (
+          <p className="qform-field-hint">{t('common.contactHintTelegram', lang)}</p>
+        )}
+      </div>
+
+      <div className="qform-contact-cell" id="questionnaire-field-contact_instagram">
+        <span className="qform-contact-label">Instagram</span>
+        <input
+          type="text"
+          className={`form-input ${errors.contact_instagram ? 'error' : ''}`}
+          value={formData.contact_instagram ?? ''}
+          onChange={(e) => onChange('contact_instagram', e.target.value)}
+          placeholder={t('common.contactPlaceholderInstagram', lang)}
+        />
+        {errors.contact_instagram ? (
+          <p className="qform-field-error">{errors.contact_instagram}</p>
+        ) : (
+          <p className="qform-field-hint">{t('common.contactHintInstagram', lang)}</p>
+        )}
+      </div>
+
+      <div className="qform-contact-cell" id="questionnaire-field-contact_whatsapp">
+        <span className="qform-contact-label">{t('common.contactLabelWhatsapp', lang)}</span>
+        <input
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          className={`form-input ${errors.contact_whatsapp ? 'error' : ''}`}
+          value={formData.contact_whatsapp ?? ''}
+          onChange={(e) => onChange('contact_whatsapp', e.target.value)}
+          placeholder={t('common.contactPlaceholderWhatsapp', lang)}
+        />
+        {errors.contact_whatsapp ? (
+          <p className="qform-field-error">{errors.contact_whatsapp}</p>
+        ) : (
+          <p className="qform-field-hint">{t('common.contactHintWhatsapp', lang)}</p>
+        )}
+      </div>
+
+      <div className="qform-contact-cell" id="questionnaire-field-contact_max">
+        <span className="qform-contact-label">{t('common.contactLabelMax', lang)}</span>
+        <input
+          type="text"
+          inputMode="text"
+          className={`form-input ${errors.contact_max ? 'error' : ''}`}
+          value={formData.contact_max ?? ''}
+          onChange={(e) => onChange('contact_max', e.target.value)}
+          placeholder={t('common.contactPlaceholderMax', lang)}
+        />
+        {errors.contact_max ? (
+          <p className="qform-field-error">{errors.contact_max}</p>
+        ) : (
+          <p className="qform-field-hint">{t('common.contactHintMax', lang)}</p>
+        )}
+      </div>
+    </div>
+  </div>
+);
 
 export const QuestionnaireForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -56,6 +158,27 @@ export const QuestionnaireForm: React.FC = () => {
       // если localStorage недоступен, просто ничего не делаем
     }
   }, [id, formData, consent]);
+
+  // Подсветка формата мессенджеров (без ошибки «нужен хотя бы один» до отправки)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrors((prev) => {
+        const fmt = getHealthContactFormatOnlyErrors(formData, lang);
+        const next = { ...prev };
+        ['contact_telegram', 'contact_instagram', 'contact_whatsapp', 'contact_max', 'contacts'].forEach(
+          (k) => {
+            delete next[k];
+          }
+        );
+        Object.assign(next, fmt);
+        if (hasAnyHealthContact(formData)) {
+          delete next.contacts;
+        }
+        return next;
+      });
+    }, 350);
+    return () => clearTimeout(timer);
+  }, [formData.contact_telegram, formData.contact_instagram, formData.contact_whatsapp, formData.contact_max, lang]);
   
   if (!questionnaire) {
     return (
@@ -95,13 +218,26 @@ export const QuestionnaireForm: React.FC = () => {
     });
     
     // Очищаем ошибку для этого поля
-    if (errors[fieldId]) {
+    if (errors[fieldId] || (fieldId.startsWith('contact_') && errors.contacts)) {
       setErrors(prev => {
         const newErrors = { ...prev };
         delete newErrors[fieldId];
+        if (fieldId.startsWith('contact_')) {
+          delete newErrors.contacts;
+        }
         return newErrors;
       });
     }
+  };
+
+  const handleContactFieldChange = (fieldId: string, value: string) => {
+    let v = value;
+    if (fieldId === 'contact_telegram' || fieldId === 'contact_instagram') {
+      v = normalizeTelegramUsername(value);
+    } else if (fieldId === 'contact_whatsapp') {
+      v = normalizePhoneInput(value);
+    }
+    handleInputChange(fieldId, v);
   };
   
   const validateForm = (): Record<string, string> => {
@@ -142,20 +278,6 @@ export const QuestionnaireForm: React.FC = () => {
         }
       }
       
-      // Валидация Telegram
-      if (question.id === 'contact_telegram' && formData[question.id]) {
-        if (!validateTelegram(formData[question.id])) {
-          newErrors[question.id] = t('common.invalidTelegram', lang);
-        }
-      }
-      
-      // Валидация Instagram
-      if (question.id === 'contact_instagram' && formData[question.id]) {
-        if (!validateInstagram(formData[question.id])) {
-          newErrors[question.id] = t('common.invalidInstagram', lang);
-        }
-      }
-      
       // Проверяем условные поля, если они должны быть показаны
       if (question.conditionalFields) {
         question.conditionalFields.forEach(cond => {
@@ -174,7 +296,8 @@ export const QuestionnaireForm: React.FC = () => {
     };
     
     allQuestions.forEach(validateQuestion);
-    
+    Object.assign(newErrors, getHealthContactFieldErrors(formData, lang));
+
     setErrors(newErrors);
     return newErrors;
   };
@@ -186,6 +309,22 @@ export const QuestionnaireForm: React.FC = () => {
     // Небольшая задержка, чтобы DOM обновился
     setTimeout(() => {
       for (const errorId of errorKeys) {
+        if (errorId === 'contacts') {
+          const el = document.getElementById('questionnaire-field-contacts');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+          }
+        }
+        if (errorId.startsWith('contact_')) {
+          const contactEl = document.getElementById(`questionnaire-field-${errorId}`);
+          if (contactEl) {
+            contactEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const input = contactEl.querySelector('input');
+            if (input instanceof HTMLInputElement) input.focus();
+            return;
+          }
+        }
         const errorElement = document.getElementById(errorId) || 
                            document.querySelector(`[data-field-id="${errorId}"]`) ||
                            document.querySelector(`[name="${errorId}"]`);
@@ -287,6 +426,13 @@ export const QuestionnaireForm: React.FC = () => {
               lang={lang}
             />
           ))}
+
+          <HealthQuestionnaireContacts
+            formData={formData}
+            errors={errors}
+            lang={lang}
+            onChange={handleContactFieldChange}
+          />
           
           <div className="consent-section" id="consent-checkbox">
             <label className="consent-label">
@@ -304,7 +450,7 @@ export const QuestionnaireForm: React.FC = () => {
             <button
               type="submit"
               className="nav-button submit-btn"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !consent || !isHealthContactBlockValid(formData)}
             >
               {isSubmitting ? t('common.submitting', lang) : t('common.submit', lang)}
             </button>
@@ -352,40 +498,16 @@ const QuestionFieldComponent: React.FC<QuestionFieldProps> = ({
   const renderField = () => {
     switch (question.type) {
       case 'text':
-        const isTelegramField = question.id === 'contact_telegram';
-        const isInstagramField = question.id === 'contact_instagram';
-        
         return (
           <div className="text-input-wrapper">
             <input
               type="text"
               id={question.id}
               value={value || ''}
-              onChange={(e) => {
-                let inputValue = e.target.value;
-                // Автоматически добавляем @ для Telegram
-                if (isTelegramField && inputValue && !inputValue.startsWith('@')) {
-                  inputValue = '@' + inputValue.replace(/^@+/, '');
-                }
-                // Убираем @ для Instagram
-                if (isInstagramField && inputValue.startsWith('@')) {
-                  inputValue = inputValue.replace(/^@+/, '');
-                }
-                onChange(inputValue);
-              }}
+              onChange={(e) => onChange(e.target.value)}
               placeholder={placeholder}
               className={`form-input ${errors?.[question.id] ? 'error' : ''}`}
             />
-            {isTelegramField && value && (
-              <div className={`field-hint ${validateTelegram(value) ? 'hint-success' : 'hint-error'}`}>
-                {validateTelegram(value) ? t('common.telegramHintOk', lang) : t('common.telegramHintBad', lang)}
-              </div>
-            )}
-            {isInstagramField && value && (
-              <div className={`field-hint ${validateInstagram(value) ? 'hint-success' : 'hint-error'}`}>
-                {validateInstagram(value) ? t('common.instagramHintOk', lang) : t('common.instagramHintBad', lang)}
-              </div>
-            )}
           </div>
         );
       
@@ -680,10 +802,8 @@ const QuestionFieldComponent: React.FC<QuestionFieldProps> = ({
     }
   };
   
-  const isContactField = question.id === 'contact_telegram' || question.id === 'contact_instagram';
-  
   return (
-    <div className={`question-field ${isContactField ? 'contact-field' : ''}`}>
+    <div className="question-field">
       <label htmlFor={question.id} className="question-label">
         {label}
         {question.required && <span className="required">*</span>}
@@ -729,27 +849,6 @@ const QuestionFieldComponent: React.FC<QuestionFieldProps> = ({
     </div>
   );
 };
-
-// Валидация Telegram username
-function validateTelegram(username: string): boolean {
-  if (!username) return false;
-  // Telegram username должен начинаться с @ и содержать только буквы, цифры и подчеркивания
-  // Длина от 5 до 32 символов (без @)
-  const telegramRegex = /^@[a-zA-Z0-9_]{5,32}$/;
-  return telegramRegex.test(username);
-}
-
-// Валидация Instagram username
-function validateInstagram(username: string): boolean {
-  if (!username) return false;
-  // Instagram username: только буквы, цифры, точки и подчеркивания
-  // Длина от 1 до 30 символов, не может начинаться или заканчиваться точкой
-  const instagramRegex = /^[a-zA-Z0-9._]{1,30}$/;
-  if (!instagramRegex.test(username)) return false;
-  if (username.startsWith('.') || username.endsWith('.')) return false;
-  if (username.includes('..')) return false;
-  return true;
-}
 
 // Рекурсивная функция для получения всех вопросов (включая условные)
 function getAllQuestions(questions: QuestionField[]): QuestionField[] {

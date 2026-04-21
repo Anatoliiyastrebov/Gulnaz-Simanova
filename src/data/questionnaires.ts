@@ -302,24 +302,6 @@ export const babiesQuestionnaire: Questionnaire = {
       placeholder: 'Дополнительная информация',
       placeholderEn: 'Additional information',
       required: true
-    },
-    {
-      id: 'contact_telegram',
-      type: 'text',
-      label: 'Telegram для связи (укажите @username)',
-      labelEn: 'Telegram for contact (enter @username)',
-      placeholder: '@username',
-      placeholderEn: '@username',
-      required: true
-    },
-    {
-      id: 'contact_instagram',
-      type: 'text',
-      label: 'Instagram для связи (укажите username без @)',
-      labelEn: 'Instagram for contact (enter username without @)',
-      placeholder: 'username',
-      placeholderEn: 'username',
-      required: false
     }
   ]
 };
@@ -529,24 +511,6 @@ export const childrenQuestionnaire: Questionnaire = {
       placeholder: 'Дополнительная информация',
       placeholderEn: 'Additional information',
       required: true
-    },
-    {
-      id: 'contact_telegram',
-      type: 'text',
-      label: 'Telegram для связи (укажите @username)',
-      labelEn: 'Telegram for contact (enter @username)',
-      placeholder: '@username',
-      placeholderEn: '@username',
-      required: true
-    },
-    {
-      id: 'contact_instagram',
-      type: 'text',
-      label: 'Instagram для связи (укажите username без @)',
-      labelEn: 'Instagram for contact (enter username without @)',
-      placeholder: 'username',
-      placeholderEn: 'username',
-      required: false
     }
   ]
 };
@@ -1029,24 +993,6 @@ export const femaleQuestionnaire: Questionnaire = {
       placeholder: 'Опишите главную проблему или вопрос',
       placeholderEn: 'Describe the main problem or question',
       required: true
-    },
-    {
-      id: 'contact_telegram',
-      type: 'text',
-      label: 'Telegram для связи (укажите @username)',
-      labelEn: 'Telegram for contact (enter @username)',
-      placeholder: '@username',
-      placeholderEn: '@username',
-      required: true
-    },
-    {
-      id: 'contact_instagram',
-      type: 'text',
-      label: 'Instagram для связи (укажите username без @)',
-      labelEn: 'Instagram for contact (enter username without @)',
-      placeholder: 'username',
-      placeholderEn: 'username',
-      required: false
     }
   ]
 };
@@ -1519,24 +1465,6 @@ export const maleQuestionnaire: Questionnaire = {
       placeholder: 'Опишите главную проблему или вопрос',
       placeholderEn: 'Describe the main problem or question',
       required: true
-    },
-    {
-      id: 'contact_telegram',
-      type: 'text',
-      label: 'Telegram для связи (укажите @username)',
-      labelEn: 'Telegram for contact (enter @username)',
-      placeholder: '@username',
-      placeholderEn: '@username',
-      required: true
-    },
-    {
-      id: 'contact_instagram',
-      type: 'text',
-      label: 'Instagram для связи (укажите username без @)',
-      labelEn: 'Instagram for contact (enter username without @)',
-      placeholder: 'username',
-      placeholderEn: 'username',
-      required: false
     }
   ]
 };
